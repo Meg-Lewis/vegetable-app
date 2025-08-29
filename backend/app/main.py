@@ -1,9 +1,23 @@
 from fastapi import FastAPI
-from routes import plans
+from fastapi.middleware.cors import CORSMiddleware
+from router import vegetables, plant_profiles
 
 app = FastAPI()
-app.include_router(plans.router)
+
+# CORS
+origins = ["http://localhost:5173"]  # React dev server
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(vegetables.router, prefix="/vegetables")
+app.include_router(plant_profiles.router, prefix="/plants")
 
 @app.get("/")
 async def root():
-    return {"message": "Backend running!"}
+    return {"message": "Vegetable API running"}
