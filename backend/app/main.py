@@ -1,8 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+import models
 from fastapi.middleware.cors import CORSMiddleware
 from router import vegetables, plant_profiles
+from database import engine, Base, get_db
 
 app = FastAPI()
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 # CORS
 origins = ["http://localhost:5173"]  # React dev server
@@ -21,3 +27,8 @@ app.include_router(plant_profiles.router, prefix="/plants")
 @app.get("/")
 async def root():
     return {"message": "Vegetable API running"}
+
+@app.get("/vegetables")
+def get_vegetables(db: Session = Depends(get_db)):
+    veggies = db.query(models.Vegetable).all()
+    return veggies
