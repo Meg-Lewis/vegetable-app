@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-import models
+from . import models
 from fastapi.middleware.cors import CORSMiddleware
-from router import vegetables, plant_profiles
-from database import engine, Base, get_db
+from .router import vegetables, plant_profiles
+from .database import engine, Base, get_db
 
 app = FastAPI()
 
@@ -26,7 +26,7 @@ app.include_router(plant_profiles.router, prefix="/plants")
 
 @app.get("/")
 async def root():
-    return {"message": "Vegetable API running"}
+    return {"message": "Vegetable API running and FastAPI + MySQL is working!"}
 
 @app.get("/vegetables")
 def get_vegetables(db: Session = Depends(get_db)):
