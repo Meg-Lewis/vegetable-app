@@ -1,0 +1,14 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.page-container.full-height {
+  height: 100vh;
+}
+
+.page-content {
+  width: 100%;
+}

@@ -4,6 +4,7 @@ import VegetableList from './pages/VegetableList';
 import PlantProfile from './pages/PlantProfile';
 import Signup from './pages/SignUp';
 import Login from './pages/Login';
+import WelcomePage from './pages/WelcomePage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/plant/:id" element={<PlantProfile />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<WelcomePage />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,19 @@
+.logo {
+  display: inline-block;
+}
+
+.logo-small {
+  height: 32px;
+}
+
+.logo-medium {
+  height: 64px;
+}
+
+.logo-large {
+  height: 96px;
+}
+
+.logo-xlarge {
+  height: 128px;
+}

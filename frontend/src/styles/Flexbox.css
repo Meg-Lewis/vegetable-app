@@ -1,0 +1,11 @@
+.flex.responsive {
+  width: 100%;
+}
+
+/* stack vertically on small screens */
+@media (max-width: 768px) {
+  .flex.responsive {
+    flex-direction: column !important; 
+    align-items: center;
+  }
+}

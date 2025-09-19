@@ -1,0 +1,10 @@
+.grid.responsive {
+  width: 100%;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  .grid.responsive {
+    grid-template-columns: 1fr !important; 
+  }
+}

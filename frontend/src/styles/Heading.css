@@ -10,6 +10,7 @@
   font-family: var(--secondary-font); 
   font-size: 3.5rem;
   font-weight: bold;
+  margin-bottom: 1.25rem;
 }
 
 .heading-2 {
