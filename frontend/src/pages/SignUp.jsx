@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Container from "../components/Container";
 import PageContainer from "../components/PageContainer";
 import Flex from "../components/Flexbox";
@@ -11,18 +11,43 @@ import InputField from "../components/InputField";
 import Flexbox from "../components/Flexbox";
 import Text from "../components/Text";
 
-export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+export default function SignUp() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
 
-  const handleSignup = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setMessage("Signup successful!");
-    } catch (error) {
-      setMessage(error.message);
+      // Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      // Update displayName with name field
+      await updateProfile(userCredential.user, {
+        displayName: formData.name,
+      });
+
+      console.log("User signed up:", userCredential.user);
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -31,41 +56,45 @@ export default function Signup() {
       <PageContainer>
       <Container size="small">
         <Flex direction="column" gap="1rem" align="center" justify="center" fullHeight={true}>
-              <Logo variant="icon" size="large" clickable={false} />
-              <Heading level={1}>Sign Up</Heading>
-      <form onSubmit={handleSignup}>
-                 <InputField
+      <Logo variant="icon" size="large" clickable={false} />
+      <Heading level={1}>Sign Up</Heading>
+      <form onSubmit={handleSubmit}>
+      <InputField
         type="text"
+        name="name"
         placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={formData.name}
+        onChange={handleChange}
         required
       />
         
          <InputField
         type="email"
+        name="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formData.email}
+        onChange={handleChange}
         required
       />
       <InputField
         type="password"
+        name="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.password}
+        onChange={handleChange}
       />
       <InputField
         type="password"
+        name="confirmPassword"
         placeholder="Confirm password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.confirmPassword}
+        onChange={handleChange}
       />
       <Flexbox>
-      <Button type="submit"  label="Submit" variant="primary" onClick={() => alert("Thank you for signing up!")} />
+      <Button type="submit"  label="Submit" variant="primary" />
       </Flexbox>
       </form>
-      <p>{message}</p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <Text size="small" variant="muted">Already have an account? Log in <a href="/login">here</a>.</Text>
       </Flex>
       </Container>

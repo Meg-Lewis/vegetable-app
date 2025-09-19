@@ -42,7 +42,10 @@ export default function Login() {
           </Flexbox>
         </form>
         <p>{message}</p>
+        <div>
         <Text size="small" variant="muted">Don't have an account? Sign up <a href="/signup">here</a>.</Text>
+        <Text size="small" variant="muted">Forgot your password? Reset it <a href="/forgot-password">here</a>.</Text>
+        </div>
       </Flex>
       </Container>
       </PageContainer>
