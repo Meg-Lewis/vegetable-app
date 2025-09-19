@@ -30,5 +30,5 @@ async def root():
 
 @app.get("/vegetables")
 def get_vegetables(db: Session = Depends(get_db)):
-    veggies = db.query(models.Vegetable).all()
-    return veggies
+    vegetables = db.query(models.Vegetable).all()
+    return [{"id": veg.id, "name": veg.name, "difficulty": veg.difficulty} for veg in vegetables]

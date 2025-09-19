@@ -7,6 +7,8 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import WelcomePage from './pages/WelcomePage';
 import ForgotPassword from './pages/ForgotPassword';
+import GetStarted from './pages/GetStarted';
+import VegSelect from './pages/VegSelect';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/get-started" element={<GetStarted />} />
+        <Route path="/veg-select" element={<VegSelect />} />
       </Routes>
     </BrowserRouter>
   );

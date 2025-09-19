@@ -5,6 +5,6 @@ import "../styles/Container.css";
 // size: small, medium, large
 // className: additional classes for customisation
 
-export default function Container({ children, size = "medium", border = true, className = "" }) {
+export default function Container({ children, size = "medium", className = "" }) {
   return <div className={`container container-${size} ${className}`}>{children}</div>;
 }

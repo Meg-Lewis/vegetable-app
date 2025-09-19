@@ -6,7 +6,7 @@ import PageContainer from "../components/PageContainer";
 import Logo from "../components/Logo";
 import { Link } from "react-router-dom";
 
-function WelcomePage() {
+function GetStarted() {
 
     return(
         <div>
@@ -14,13 +14,10 @@ function WelcomePage() {
         <Container size="medium">
             <Flex direction="column" gap="1rem" align="center" justify="center" fullHeight={true}>
             <Logo variant="icon" size="xlarge" clickable={false} />
-            <Heading level={1}>Get Started On Your Journey Today!</Heading>
+            <Heading level={1}>Let's Get Started!</Heading>
             <Flex gap="1rem" justify="center">
             <Link to="/login">
-            <Button label="Log In" variant="primary" />
-            </Link>
-            <Link to="/signup">
-            <Button label="Sign Up" variant="secondary" />
+            <Button label="Let's Go" variant="primary" />
             </Link>
             </Flex>
             </Flex>
@@ -29,4 +26,4 @@ function WelcomePage() {
         </div>
     )
 }
-export default WelcomePage;
+export default GetStarted;
