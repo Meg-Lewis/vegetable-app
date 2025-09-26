@@ -9,6 +9,7 @@ import WelcomePage from './pages/WelcomePage';
 import ForgotPassword from './pages/ForgotPassword';
 import GetStarted from './pages/GetStarted';
 import VegSelect from './pages/VegSelect';
+import VegetablePatch from './pages/VegetablePatch';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/get-started" element={<GetStarted />} />
         <Route path="/veg-select" element={<VegSelect />} />
+        <Route path="/veg-patch" element={<VegetablePatch />} />
       </Routes>
     </BrowserRouter>
   );
