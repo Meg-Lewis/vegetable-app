@@ -1,25 +1,36 @@
-import Button from "../components/Button";
-import Heading from "../components/Heading";
+import React from "react";
+import PageContainer from "../components/PageContainer";
 import Container from "../components/Container";
-import { useNavigate } from "react-router-dom";
 import Flex from "../components/Flexbox";
+import Text from "../components/Text";
+import Header from "../components/Header";
+import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
+import Logo from "../components/Logo"; 
+import "../styles/VegetablePatch.css"; 
 
 export default function VegetablePatch() {
+  const { selectedVegetables } = useSelectedVegetables();
+
   return (
-      <div>
-      <Container size="small">
-      <Heading level={1} alignText="center">Your Veg Patch</Heading>
-      <Flex direction="row" gap="1rem" align="center" justify="center">
-      <Button label="Year" variant="primary" onClick={() => navigate("/")} />
-      <Button label="Seasons" variant="primary" onClick={() => navigate("/")} />
-      <Button label="Vegetables" variant="primary" onClick={() => navigate("/veg-patch")}/>
-      </Flex>
-      
+    <PageContainer>
+      <Container size="large">
+        <Flex direction="column" gap="2rem" align="center" justify="flex-start">
+          <Header label="Your Veg Patch" />
 
-      <div>
-
-      </div>
+          {selectedVegetables.length === 0 ? (
+            <Text size="medium">No vegetables selected yet.</Text>
+          ) : (
+            <div className="veg-grid">
+              {selectedVegetables.map((veg) => (
+                <div key={veg.id} className="veg-card">
+                  <Logo variant="icon" size="large" /> {/* placeholder image */}
+                  <Text size="medium" textAlign="center">{veg.name}</Text>
+                </div>
+              ))}
+            </div>
+          )}
+        </Flex>
       </Container>
-    </div>
+    </PageContainer>
   );
 }

@@ -25,7 +25,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/get-started" element={<GetStarted />} />
         <Route path="/veg-select" element={<VegSelect />} />
-        <Route path="/veg-patch" element={<VegetablePatch />} />
+        <Route path="/vegetablepatch" element={<VegetablePatch />} />
       </Routes>
     </BrowserRouter>
   );

@@ -6,7 +6,7 @@ import "../styles/Heading.css";
 // alignText: text alignment left, center, right (default center)
 // className: additional classes for styling
 
-export default function Heading({ level = 1, children, alignText = "center", className = "" }) {
+export default function Heading({ level = 1, label, children, alignText = "center", className = "" }) {
   const Tag = `h${level}`;
   const style = {
     textAlign: alignText,
@@ -14,7 +14,7 @@ export default function Heading({ level = 1, children, alignText = "center", cla
 
   return (
     <Tag className={`heading heading-${level} ${className}`} style={style}>
-      {children}
+      {children}{label}
     </Tag>
   );
 }

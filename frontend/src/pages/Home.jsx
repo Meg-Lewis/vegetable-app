@@ -2,21 +2,14 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Container from "../components/Container";
 import { useNavigate } from "react-router-dom";
-import Flex from "../components/Flexbox";
+import Header from "../components/Header";
 
 export default function Homepage() {
   const navigate = useNavigate();
 
     return (
       <div>
-      <Container size="small">
-      <Heading level={1} alignText="center">Homepage</Heading>
-      <Flex direction="row" gap="1rem" align="center" justify="center">
-      <Button label="Year" variant="primary" onClick={() => navigate("/")} />
-      <Button label="Seasons" variant="primary" onClick={() => navigate("/")} />
-      <Button label="Vegetables" variant="primary" onClick={() => navigate("/veg-patch")}/>
-      </Flex>
-      </Container>
+      <Header label="Homepage" />
     </div>
   )
 

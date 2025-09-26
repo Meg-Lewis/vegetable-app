@@ -13,12 +13,13 @@ import "../styles/listItem.css";
 import "../styles/ScrollContainer.css";
 import "../styles/Tag.css";
 import { useNavigate } from "react-router-dom";
+import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
 
 export default function VegSelect() {
   const navigate = useNavigate();
   const [vegetables, setVegetables] = useState([]);
-  const [selected, setSelected] = useState({});
   const [search, setSearch] = useState("");
+  const { selectedVegetables, toggleVegetable } = useSelectedVegetables();
 
   useEffect(() => {
     axios
@@ -27,15 +28,12 @@ export default function VegSelect() {
       .catch((err) => console.error(err));
   }, []);
 
-  const handleSelect = (id) => {
-    setSelected((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
   const filteredVegetables = vegetables.filter((veg) =>
     veg.name.toLowerCase().includes(search.toLowerCase())
   );
 
-
+  const isSelected = (veg) =>
+    selectedVegetables.some((v) => v.id === veg.id);
 
   return (
     <PageContainer>
@@ -53,19 +51,16 @@ export default function VegSelect() {
             fullWidth
           />
 
-          {/* Scrollable container around the list */}
           <div className="scroll-container">
             <UnorderedList className="unordered-list">
               {filteredVegetables.map((veg) => (
                 <li
                   key={veg.id}
-                  className={`list-item ${selected[veg.id] ? "selected" : ""}`}
-                  onClick={() => handleSelect(veg.id)}
+                  className={`list-item ${isSelected(veg) ? "selected" : ""}`}
+                  onClick={() => toggleVegetable(veg)}
                 >
                   <Flex justify="space-between" align="center" fullWidth={true}>
-                    <Text size="medium" textAlign="left">
-                      {veg.name}
-                    </Text>
+                    <Text size="medium" textAlign="left">{veg.name}</Text>
                     <Tag difficulty={veg.difficulty} label={veg.difficulty} type={veg.difficulty} />
                   </Flex>
                 </li>
@@ -73,10 +68,8 @@ export default function VegSelect() {
             </UnorderedList>
           </div>
 
-          {/* <pre>{JSON.stringify(selected, null, 2)}</pre> For debugging*/}
-          <Button variant="primary" label="Next" onClick={() => navigate("/")}></Button>
+          <Button variant="primary" label="Next" onClick={() => navigate("/")} />
         </Flex>
-        
       </Container>
     </PageContainer>
   );
