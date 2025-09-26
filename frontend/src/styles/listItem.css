@@ -1,0 +1,18 @@
+.list-item {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.list-item:hover {
+  background-color: #f9f9f9; /* slight hover effect */
+}
+
+.list-item.selected {
+  background-color: #e6e6e6; /* light grey when selected */
+  border-color: #333;
+}

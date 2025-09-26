@@ -1,0 +1,30 @@
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px; /* pill shape */
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  width: 80px;
+  text-align: center;
+}
+
+.tag.easy {
+  background-color: #bbf7d0; /* light green */
+  color: #166534; /* dark green */
+}
+
+.tag.medium {
+  background-color: #fed7aa; /* light orange */
+  color: #9a3412; /* dark orange */
+}
+
+.tag.hard {
+  background-color: #fecaca; /* light red */
+  color: #991b1b; /* dark red */
+}
+
+.tag.default {
+  background-color: #e5e7eb; /* gray */
+  color: #374151; /* dark gray */
+}
