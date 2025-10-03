@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Container from "../components/Container";
 import PageContainer from "../components/PageContainer";
@@ -15,12 +16,13 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setMessage("Login successful!");
+      navigate("/");
     } catch (error) {
       setMessage(error.message);
     }

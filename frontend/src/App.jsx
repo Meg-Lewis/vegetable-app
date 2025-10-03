@@ -13,7 +13,6 @@ import VegetablePatch from './pages/VegetablePatch';
 
 function App() {
   return (
-    <BrowserRouter>
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -27,7 +26,6 @@ function App() {
         <Route path="/veg-select" element={<VegSelect />} />
         <Route path="/vegetablepatch" element={<VegetablePatch />} />
       </Routes>
-    </BrowserRouter>
   );
 }
 

@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .env
+
+
+firebase_admin_credentials.json

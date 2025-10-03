@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageContainer from "../components/PageContainer";
 import Container from "../components/Container";
 import Flex from "../components/Flexbox";
 import Text from "../components/Text";
 import Header from "../components/Header";
 import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
+import { useAuth } from "../context/AuthContext";
 import Logo from "../components/Logo"; 
+import axios from "axios";
 import "../styles/VegetablePatch.css"; 
 
 export default function VegetablePatch() {
-  const { selectedVegetables } = useSelectedVegetables();
+  const { selectedVegetables, setSelectedVegetables } = useSelectedVegetables();
+  const { token } = useAuth(); // Firebase token
+
+  // Fetch saved vegetables on mount
+  useEffect(() => {
+    if (!token) return;
+
+    axios
+      .get("http://127.0.0.1:8000/vegetables/user", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then((response) => setSelectedVegetables(response.data))
+      .catch((error) => console.error("Failed to load saved vegetables:", error));
+  }, [token, setSelectedVegetables]);
 
   return (
     <PageContainer>

@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, Text, TIMESTAMP
+from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy.orm import relationship
 from .database import Base
 
+# Vegetables available to the app
 class Vegetable(Base):
     __tablename__ = "vegetables"
 
@@ -23,3 +25,18 @@ class Vegetable(Base):
     harvest = Column(String(50))
     harvest_signs = Column(Text)
 
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    firebase_uid = Column(String, unique=True, index=True)
+    vegetables = relationship("UserVegetable", back_populates="user")
+
+# Vegetables selected by users
+class UserVegetable(Base):
+    __tablename__ = "user_vegetables"
+    id = Column(Integer, primary_key=True, index=True)
+    veg_name = Column(String)
+    difficulty = Column(String)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    user = relationship("User", back_populates="vegetables")
