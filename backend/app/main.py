@@ -13,7 +13,7 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 # CORS
-origins = ["http://localhost:5173"]  # React dev server
+origins = ["http://localhost:5173", "http://127.0.0.1:5173"]  # React dev server
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

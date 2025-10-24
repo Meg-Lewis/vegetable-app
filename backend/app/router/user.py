@@ -13,4 +13,4 @@ def get_user_vegetables(
     user = db.query(User).filter(User.firebase_uid == uid).first()
     if not user:
         return []
-    return [{"id": uv.id, "name": uv.veg_name, "difficulty": uv.difficulty} for uv in user.vegetables]
+    return [{"id": uv.id, "name": uv.name, "difficulty": uv.difficulty} for uv in user.vegetables]

@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from .database import Base
 
+
 # Vegetables available to the app
 class Vegetable(Base):
     __tablename__ = "vegetables"
@@ -28,15 +29,16 @@ class Vegetable(Base):
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
-    firebase_uid = Column(String, unique=True, index=True)
+    firebase_uid = Column(String(50), unique=True, index=True)
     vegetables = relationship("UserVegetable", back_populates="user")
 
 # Vegetables selected by users
 class UserVegetable(Base):
     __tablename__ = "user_vegetables"
     id = Column(Integer, primary_key=True, index=True)
-    veg_name = Column(String)
-    difficulty = Column(String)
+    vegetable_id = Column(Integer, ForeignKey("vegetables.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="vegetables")
+    vegetable = relationship("Vegetable")  # To access all veg details.
+

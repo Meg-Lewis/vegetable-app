@@ -66,13 +66,13 @@ export default function VegSelect() {
     }
 
     try {
-      await axios.post(
-        "http://127.0.0.1:8000/vegetables/select",
-        selectedVegetables.map((veg) => ({ name: veg.name, difficulty: veg.difficulty })),
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+        await axios.post(
+          "http://127.0.0.1:8000/vegetables/select",
+          { vegetable_ids: selectedVegetables.map((veg) => veg.id) },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
       navigate("/vegetablepatch");
     } catch (error) {
       console.error("Error saving selected vegetables:", error);

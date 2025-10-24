@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // 👈 for navigation
 import PageContainer from "../components/PageContainer";
 import Container from "../components/Container";
 import Flex from "../components/Flexbox";
@@ -13,6 +14,7 @@ import "../styles/VegetablePatch.css";
 export default function VegetablePatch() {
   const { selectedVegetables, setSelectedVegetables } = useSelectedVegetables();
   const { token } = useAuth(); // Firebase token
+  const navigate = useNavigate();
 
   // Fetch saved vegetables on mount
   useEffect(() => {
@@ -26,6 +28,11 @@ export default function VegetablePatch() {
       .catch((error) => console.error("Failed to load saved vegetables:", error));
   }, [token, setSelectedVegetables]);
 
+  const handleVegClick = (vegId) => {
+    // 👇 navigate to the plant profile page
+    navigate(`/plant/${vegId}`);
+  };
+
   return (
     <PageContainer>
       <Container size="large">
@@ -37,7 +44,11 @@ export default function VegetablePatch() {
           ) : (
             <div className="veg-grid">
               {selectedVegetables.map((veg) => (
-                <div key={veg.id} className="veg-card">
+                <div
+                  key={veg.id}
+                  className="veg-card clickable" 
+                  onClick={() => handleVegClick(veg.id)}
+                >
                   <Logo variant="icon" size="large" /> {/* placeholder image */}
                   <Text size="medium" textAlign="center">{veg.name}</Text>
                 </div>

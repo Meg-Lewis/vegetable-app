@@ -12,3 +12,7 @@ class Vegetable(VegetableBase):
 
     class Config:
         orm_mode = True
+
+class UserVegetableOut(BaseModel):
+    id: int
+    name: str
