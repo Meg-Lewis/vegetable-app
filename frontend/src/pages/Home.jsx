@@ -14,7 +14,7 @@ export default function Homepage() {
     if (!confirmReset) return;
 
     try {
-      const resetResponse = await fetch(`/api/users/${user.uid}/vegetables/reset`, {
+      const resetResponse = await fetch(`http://127.0.0.1:8000/vegetables/users/vegetables/reset`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`, // send Firebase token to backend

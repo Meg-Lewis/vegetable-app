@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..database import get_db
 from ..auth import verify_firebase_token
@@ -96,6 +96,15 @@ def get_vegetable_details(vegetable_id: int, db: Session = Depends(get_db)):
     }
 
 
+# HELPER to get internal user ID using Firebase UID
+#---------------------------------------------------------------
+def get_user_id_from_firebase_uid(firebase_uid: str, db: Session):
+    user = db.query(models.User).filter(models.User.firebase_uid == firebase_uid).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user.id
+
+
 # RESET all vegetable selection
 #---------------------------------------------------------------
 @router.delete("/users/vegetables/reset")
@@ -103,6 +112,21 @@ def reset_user_vegetables(
     current_user: dict = Depends(dependencies.get_current_user),
     db: Session = Depends(get_db)
 ):
-    db.query(models.UserVegetable).filter(models.UserVegetable.user_id == current_user["uid"]).delete()
+    # Step 1: get the Firebase UID from the verified user
+    firebase_uid = current_user["uid"]
+
+    # Step 2: get the internal user ID. More secure than passing user_id directly.
+    user_id = get_user_id_from_firebase_uid(firebase_uid, db)
+
+    # Step 3: delete all user_vegetables for this user
+    deleted_rows = db.query(models.UserVegetable).filter(
+        models.UserVegetable.user_id == user_id
+    ).delete()
+
     db.commit()
-    return {"message": "Your vegetable selection has been reset."}
+
+    # Step 4: respond with a message
+    return {
+        "message": f"Deleted {deleted_rows} vegetable(s) for user.",
+        "user_id": user_id
+    }
