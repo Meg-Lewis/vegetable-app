@@ -7,8 +7,15 @@ import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
 
 export default function Homepage() {
   const { setSelectedVegetables } = useSelectedVegetables(); // get context function for selected vegetables
-  const { user, token } = useAuth(); // get current user and token
-  if (!user) return <div>Please log in</div>; // safety check
+  const { user, token, loading } = useAuth(); // get current user and token
+    if (loading) {
+    // Don't show anything until auth state is ready
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Please log in</div>;
+  }
 
   const resetVegSelect = async () => {
     const confirmReset = window.confirm(

@@ -2,30 +2,35 @@
 // This context allows different components to access and modify the list of the users selected vegetables.
 // The app is wrapped in SelectedVegetablesProvider in main.jsx to provide this context to all components.
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 const SelectedVegetablesContext = createContext();
 
 export function SelectedVegetablesProvider({ children }) {
+  const { token } = useAuth();
   const [selectedVegetables, setSelectedVegetables] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const toggleVegetable = (veg) => {
-    setSelectedVegetables((prev) => {
-      const exists = prev.find((v) => v.id === veg.id);
-      if (exists) {
-        return prev.filter((v) => v.id !== veg.id);
-      } else {
-        return [...prev, veg];
-      }
-    });
-  };
+  useEffect(() => {
+    if (!token) return;
+
+    setLoading(true);
+    axios
+      .get("http://127.0.0.1:8000/vegetables/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setSelectedVegetables(res.data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [token]);
 
   return (
-    <SelectedVegetablesContext.Provider value={{ selectedVegetables, setSelectedVegetables, toggleVegetable }}>
+    <SelectedVegetablesContext.Provider value={{ selectedVegetables, setSelectedVegetables, loading }}>
       {children}
     </SelectedVegetablesContext.Provider>
   );
 }
 
-// Hook for consuming the context
 export const useSelectedVegetables = () => useContext(SelectedVegetablesContext);
