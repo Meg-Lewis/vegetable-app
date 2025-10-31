@@ -2,8 +2,11 @@ import React from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
+import { useContext } from "react";
+import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
 
 export default function Homepage() {
+  const { setSelectedVegetables } = useSelectedVegetables(); // get context function for selected vegetables
   const { user, token } = useAuth(); // get current user and token
   if (!user) return <div>Please log in</div>; // safety check
 
@@ -22,6 +25,7 @@ export default function Homepage() {
       });
 
       if (resetResponse.ok) {
+        setSelectedVegetables([]); // Clear front end context
         alert("Your selection has been reset!");
         // Ponteitally redirect to veg select
       } else {
@@ -36,12 +40,14 @@ export default function Homepage() {
   return (
     <div>
       <Header label="Homepage" />
+      <div style={{ width: "200px", margin: "20px auto" }}>
       <Button
         onClick={resetVegSelect}
         type="button"
         label="DELETE VEG"
-        variant="primary"
+        variant="secondary"
       />
+      </div>
     </div>
   );
 }

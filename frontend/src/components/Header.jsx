@@ -13,6 +13,7 @@ export default function Header({ label }) { // receive label as a prop
       <Container size="small">
         <Heading level={1} alignText="center">{label}</Heading>
         <Flex direction="row" gap="1rem" align="center" justify="center">
+          <Button label="Home" variant="primary" onClick={() => navigate("/")} />
           <Button label="Year" variant="primary" onClick={() => navigate("/")} />
           <Button label="Seasons" variant="primary" onClick={() => navigate("/")} />
           <Button label="Vegetables" variant="primary" onClick={() => navigate("/vegetablepatch")} />
