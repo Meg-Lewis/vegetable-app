@@ -10,8 +10,11 @@ import { useAuth } from "../context/AuthContext";
 import Logo from "../components/Logo"; 
 import axios from "axios";
 import "../styles/VegetablePatch.css"; 
+import Button from "../components/Button";
+
 
 export default function VegetablePatch() {
+
   const { selectedVegetables, setSelectedVegetables } = useSelectedVegetables();
   const { token } = useAuth(); // Firebase token
   const navigate = useNavigate();
@@ -28,10 +31,7 @@ export default function VegetablePatch() {
       .catch((error) => console.error("Failed to load saved vegetables:", error));
   }, [token, setSelectedVegetables]);
 
-  const handleVegClick = (vegId) => {
-    // 👇 navigate to the plant profile page
-    navigate(`/plant/${vegId}`);
-  };
+
 
   return (
     <PageContainer>
@@ -40,14 +40,16 @@ export default function VegetablePatch() {
           <Header label="Your Veg Patch" />
 
           {selectedVegetables.length === 0 ? (
+            <div>
             <Text size="medium">No vegetables selected yet.</Text>
-          ) : (
+            <Button onClick ={() => navigate("/veg-select")} label="Select Vegetables" variant="secondary" />
+            </div> ) : (
             <div className="veg-grid">
               {selectedVegetables.map((veg) => (
                 <div
                   key={veg.id}
                   className="veg-card clickable" 
-                  onClick={() => handleVegClick(veg.id)}
+                  onClick={() => navigate(`/vegetable/${veg.id}`)}
                 >
                   <Logo variant="icon" size="large" /> {/* placeholder image */}
                   <Text size="medium" textAlign="center">{veg.name}</Text>
