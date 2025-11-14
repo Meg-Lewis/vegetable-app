@@ -6,64 +6,36 @@ import Flex from "../components/Flexbox";
 import Text from "../components/Text";
 import Header from "../components/Header";
 import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
-import { useAuth } from "../context/AuthContext";
 import Logo from "../components/Logo"; 
 import axios from "axios";
 import "../styles/VegetablePatch.css"; 
 import Button from "../components/Button";
+import { useAuth } from "../context/AuthContext"
 
 export default function VegetablePatch() {
   const { selectedVegetables, setSelectedVegetables } = useSelectedVegetables();
-  const { user, token, loading } = useAuth();
   const navigate = useNavigate();
+  const { token } = useAuth();
 
-  // Fetch saved vegetables once auth is ready
+
+  // Fetch vegetables ONCE when the page loads
   useEffect(() => {
-    console.log("Loading:", loading);
-    console.log("Token:", token);
-    console.log("User:", user);
-
-    if (loading) {
-      console.log("Auth still loading…");
-      return;
-    } // wait until auth initialises
-    if (!token) {
-      console.log("No token found. Redirecting to home.");
-    setTimeout(() => {
-      navigate("/");
-    }, 6000); // 2-second delay
-    return;
-  }
-
     axios
       .get("http://localhost:8000/vegetables/user", {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((response) => setSelectedVegetables(response.data))
-      .catch((error) => console.error("Failed to load saved vegetables:", error));
-  }, [token, loading, setSelectedVegetables, navigate]);
+      .catch((error) => {
+        console.log("Token right before request:", token);
+        console.log("Axios request headers:", error.config?.headers);
+        console.error("Failed to load saved vegetables:", error);
+      });
+      }, [setSelectedVegetables]);
 
-  // Click handler — only navigate if auth is ready
+  // Simple click handler — always navigate
   const handleClickVegetable = (vegId) => {
-    if (loading) {
-      console.log("Auth still loading…");
-      return;
-    }
-
-    if (!token) {
-      console.log("No token available – redirecting to home.");
-      navigate("/");
-      return;
-    }
-
-    // ✅ Navigate after confirming token
-    console.log("Navigating to vegetable:", vegId);
-    navigate(`/vegetable/${vegId}`);
+    navigate(`/${vegId}`);
   };
-
-  // Show loading / auth messages
-  if (loading) return <Text size="medium">Checking authentication...</Text>;
-  if (!user || !token) return <Text size="medium">Please log in</Text>;
 
   return (
     <PageContainer>

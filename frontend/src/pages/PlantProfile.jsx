@@ -1,57 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import PageContainer from "../components/PageContainer";
 import Container from "../components/Container";
 import Heading from "../components/Heading";
 import Text from "../components/Text";
 import HeaderVegProfile from "../components/HeaderVegProfile";
-import Button from "../components/Button";
-import { useAuth } from "../context/AuthContext";
 import Flex from "../components/Flexbox";
 import Logo from "../components/Logo";
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"
 
 export default function PlantProfile() {
-  console.log("Rendering PlantProfile component");
   const navigate = useNavigate();
+  const { token } = useAuth();
   const { vegId } = useParams();
-  const { user, token, loading } = useAuth();
   const [vegetable, setVegetable] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
-  const [fetching, setFetching] = useState(false);
 
-  // ✅ Fetch vegetable only once auth is ready
   useEffect(() => {
-    console.log("Loading:", loading);
-    console.log("Token:", token);
-    console.log("User:", user);
-
-    if (loading) {
-      console.log("From Plant profile - Auth still loading…");
-      return;} // wait for auth
-    if (!token) {
-      console.log("From Plant Profile No token found. Redirecting to home.");
-      setTimeout(() => {
-        navigate("/");
-      }, 6000); // 2-second delay
-      return;
-    }
-    
-
-
     axios
-      .get(`http://localhost:8000/vegetables/vegetable/${vegId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      .get(`http://localhost:8000/vegetables/${vegId}`, {
+       headers: { Authorization: `Bearer ${token}` }
       })
-      .then((res) => setVegetable(res.data))
-      .catch((err) => console.error("Error fetching vegetable details:", err))
-      .finally(() => setFetching(false));
-  }, [vegId, token, loading, navigate]);
+      .then(res => setVegetable(res.data))
+      .catch(err => console.error(err));
+  }, [vegId]);
 
-  // ✅ Show loading / auth messages
-  if (loading) return <Text size="medium">From PP Checking authentication...</Text>;
-  if (!user || !token) return <Text size="medium">From PP Please log in</Text>;
-  if (fetching || !vegetable) return <Text size="medium">From PPLoading vegetable details...</Text>;
+  if (!vegetable) {
+  return <Text size="medium">Loading vegetable details...</Text>;
+  }
+
 
   return (
     <PageContainer>

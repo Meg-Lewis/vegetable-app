@@ -2,11 +2,11 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from . import models
 from fastapi.middleware.cors import CORSMiddleware
-from .router import vegetables, plant_profiles
+from .router import vegetables
 from .database import engine, Base, get_db
 from fastapi import Depends
 from .auth import verify_firebase_token
-
+from fastapi import Request
 app = FastAPI()
 
 # Create tables
@@ -24,7 +24,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(vegetables.router, prefix="/vegetables")
-app.include_router(plant_profiles.router, prefix="/plants")
+
 
 @app.get("/")
 async def root():
@@ -40,3 +40,7 @@ def get_vegetables(
     vegetables = db.query(models.Vegetable).all()
     return [{"id": veg.id, "name": veg.name, "difficulty": veg.difficulty} for veg in vegetables]
 
+
+@app.get("/debug/headers")
+async def debug_headers(request: Request):
+    return dict(request.headers)

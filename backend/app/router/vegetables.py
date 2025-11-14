@@ -10,6 +10,9 @@ from typing import List
 
 router = APIRouter()
 
+from fastapi import Request
+
+
 
 # RETRIEVES ALL vegetables available. Used for selection list.
 #--------------------------------------------------------------
@@ -79,7 +82,7 @@ def get_user_vegetables(uid: str = Depends(verify_firebase_token), db: Session =
 
 # RETRIEVES all information for a specific vegetable by ID
 #--------------------------------------------------------------
-@router.get("/vegetable/{vegetable_id}")
+@router.get("/{vegetable_id}")
 def get_vegetable_details(vegetable_id: int, db: Session = Depends(get_db)):
     vegetable = db.query(models.Vegetable).filter(models.Vegetable.id == vegetable_id).first()
     if not vegetable:
@@ -141,3 +144,6 @@ def reset_user_vegetables(
         "message": f"Deleted {deleted_rows} vegetable(s) for user.",
         "user_id": user_id
     }
+
+
+

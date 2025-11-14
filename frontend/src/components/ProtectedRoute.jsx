@@ -1,19 +1,15 @@
-// ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Text from "./Text";
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+  const { user, token, loading } = useAuth();
 
-  // While Firebase is checking the session, don't redirect.
-  if (loading) {
-    return <div style={{ textAlign: "center", marginTop: "2rem" }}>Checking authentication...</div>;
-  }
+  // show a loading message instead of redirecting immediately
+  if (loading) return <Text size="medium">Checking authentication...</Text>;
 
-  // If after loading, there is still no user, *then* redirect.
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
+  // redirect only if user is truly not logged in
+  if (!user || !token) return <Navigate to="/login" replace />;
 
   return children;
 }

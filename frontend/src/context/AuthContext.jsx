@@ -9,29 +9,25 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    // Load cached user immediately to prevent flicker
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-  const [token, setToken] = useState(() => localStorage.getItem("token"));
-  const [loading, setLoading] = useState(true);
+  const storedUser = localStorage.getItem("user");
+  const storedToken = localStorage.getItem("token");
+
+  const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
+  const [token, setToken] = useState(storedToken || null);
+  const [loading, setLoading] = useState(!storedToken); // only loading if no cached token
 
   useEffect(() => {
     const auth = getAuth();
     setLoading(true);
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      console.log("🔥 onAuthStateChanged fired:", firebaseUser ? "User logged in" : "No user");
       if (firebaseUser) {
-        // Get a fresh ID token
         const idToken = await firebaseUser.getIdToken();
         setUser(firebaseUser);
         setToken(idToken);
         localStorage.setItem("user", JSON.stringify(firebaseUser));
         localStorage.setItem("token", idToken);
       } else {
-        // Clear everything on logout
         setUser(null);
         setToken(null);
         localStorage.removeItem("user");
@@ -47,7 +43,6 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{ user, token, loading }}>
       {children}
     </AuthContext.Provider>
-
   );
 }
 

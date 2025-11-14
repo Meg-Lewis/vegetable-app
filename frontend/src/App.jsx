@@ -15,18 +15,19 @@ import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
 
-      <Routes>
-        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/vegetables" element={<ProtectedRoute><VegetableList /></ProtectedRoute>} />
-        <Route path="/vegetable/:vegId" element={<ProtectedRoute><PlantProfile /></ProtectedRoute>} />
-        <Route path="/signup" element={<ProtectedRoute><SignUp /></ProtectedRoute>} />
-        <Route path="/login" element={<ProtectedRoute><Login /></ProtectedRoute>} />
-        <Route path="/welcome" element={<ProtectedRoute><WelcomePage /></ProtectedRoute>} />
-        <Route path="/forgot-password" element={<ProtectedRoute><ForgotPassword /></ProtectedRoute>} />
-        <Route path="/get-started" element={<ProtectedRoute><GetStarted /></ProtectedRoute>} />
-        <Route path="/veg-select" element={<ProtectedRoute><VegSelect /></ProtectedRoute>} />
-        <Route path="/vegetablepatch" element={<ProtectedRoute><VegetablePatch /></ProtectedRoute>} />
-      </Routes>
+<Routes>
+  <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+  <Route path="/vegetables" element={<ProtectedRoute><VegetableList /></ProtectedRoute>} />
+  <Route path="/vegetable/:vegId" element={<PlantProfile/>} />
+  <Route path="/signup" element={<SignUp />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/welcome" element={<WelcomePage />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
+  <Route path="/get-started" element={<GetStarted />} />
+  <Route path="/veg-select" element={<VegSelect />} />
+  <Route path="/vegetablepatch" element={<VegetablePatch />} />
+</Routes>
+
   );
 }
 
