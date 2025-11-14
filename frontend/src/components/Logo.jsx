@@ -12,6 +12,8 @@ export default function Logo({
   variant = "combo", 
   size = "medium",   
   clickable = true,
+  style = {}
+
 }) {
   let src;
   switch (variant) {
@@ -27,7 +29,7 @@ export default function Logo({
       break;
   }
 
-  const img = <img src={src} alt="VegAble Logo" className={`logo logo-${size}`} />;
+  const img = <img src={src} alt="VegAble Logo" className={`logo logo-${size}`} style={style} />;
 
   return clickable ? <a href="/">{img}</a> : img;
 }

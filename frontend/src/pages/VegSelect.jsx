@@ -24,19 +24,19 @@ export default function VegSelect() {
   const [allVegetables, setAllVegetables] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Fetch all vegetables from the database
+  // Fetch all vegetables from the backend once token is ready
   useEffect(() => {
-    if (!token) return; // wait for user to be logged in
+    if (!token) return; // wait for user authentication
 
     axios
       .get("http://127.0.0.1:8000/vegetables/all", {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((response) => setAllVegetables(response.data))
-      .catch((error) => console.error("Failed to fetch vegetables:", error));
+      .catch((error) => console.error("Failed to fetch all vegetables:", error));
   }, [token]);
 
-  // Optional: pre-fill selectedVegetables if user already has saved vegetables
+  // Fetch already-selected vegetables for this user
   useEffect(() => {
     if (!token) return;
 
@@ -45,16 +45,21 @@ export default function VegSelect() {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((response) => setSelectedVegetables(response.data))
-      .catch((error) => console.error("Failed to load user selections:", error));
+      .catch((error) => console.error("Failed to load user-selected vegetables:", error));
   }, [token, setSelectedVegetables]);
 
-  const filteredVegetables = allVegetables.filter((veg) =>
-    typeof searchQuery === "string" && veg.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // Filter vegetables based on search query
+  const filteredVegetables = allVegetables.filter((vegetable) =>
+    typeof searchQuery === "string" &&
+    vegetable.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const isSelected = (vegetable) => selectedVegetables.some((v) => v.id === vegetable.id);
+  // Helper to check if a vegetable is already selected
+  const isVegetableSelected = (vegetable) =>
+    selectedVegetables.some((selected) => selected.id === vegetable.id);
 
-  const handleNextClick = async () => {
+  // Save selected vegetables and navigate to the vegetable patch
+  const handleSaveAndContinue = async () => {
     if (!token) {
       alert("Please log in to save your selected vegetables.");
       return;
@@ -66,13 +71,11 @@ export default function VegSelect() {
     }
 
     try {
-        await axios.post(
-          "http://127.0.0.1:8000/vegetables/select",
-          { vegetable_ids: selectedVegetables.map((veg) => veg.id) },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+      await axios.post(
+        "http://127.0.0.1:8000/vegetables/select",
+        { vegetable_ids: selectedVegetables.map((veg) => veg.id) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       navigate("/vegetablepatch");
     } catch (error) {
       console.error("Error saving selected vegetables:", error);
@@ -95,22 +98,30 @@ export default function VegSelect() {
 
           <div className="scroll-container">
             <UnorderedList className="unordered-list">
-              {filteredVegetables.map((veg) => (
+              {filteredVegetables.map((vegetable) => (
                 <li
-                  key={veg.id}
-                  className={`list-item ${isSelected(veg) ? "selected" : ""}`}
-                  onClick={() => toggleVegetable(veg)}
+                  key={vegetable.id}
+                  className={`list-item ${isVegetableSelected(vegetable) ? "selected" : ""}`}
+                  onClick={() => toggleVegetable(vegetable)}
                 >
                   <Flex justify="space-between" align="center">
-                    <Text size="medium">{veg.name}</Text>
-                    <Tag difficulty={veg.difficulty} label={veg.difficulty} type={veg.difficulty} />
+                    <Text size="medium">{vegetable.name}</Text>
+                    <Tag
+                      difficulty={vegetable.difficulty}
+                      label={vegetable.difficulty}
+                      type={vegetable.difficulty}
+                    />
                   </Flex>
                 </li>
               ))}
             </UnorderedList>
           </div>
 
-          <Button variant="primary" label="Next" onClick={handleNextClick} />
+          <Button
+            variant="primary"
+            label="Next"
+            onClick={handleSaveAndContinue}
+          />
         </Flex>
       </Container>
     </PageContainer>

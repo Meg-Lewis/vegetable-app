@@ -92,6 +92,18 @@ def get_vegetable_details(vegetable_id: int, db: Session = Depends(get_db)):
         "sunlight": vegetable.sunlight,
         "water": vegetable.water,
         "soil": vegetable.soil,
+        "placement": vegetable.placements,
+        "spacing_down": vegetable.spacing_down,
+        "spacing_across": vegetable.spacing_across,
+        "spacing_between": vegetable.spacing_between,
+        "fertiliser": vegetable.fertilise,
+        "care_1": vegetable.care_1,
+        "care_2": vegetable.care_2,
+        "care_3": vegetable.care_3,
+        "harvest": vegetable.harvest,
+        "harvest_signs": vegetable.harvest_signs,
+        "sow": vegetable.sow,
+        "plant_hoe": vegetable.plant_hoe,
     }
 
 

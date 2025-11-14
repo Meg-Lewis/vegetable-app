@@ -1,7 +1,6 @@
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
   box-sizing: border-box;
 }
 
@@ -16,4 +15,14 @@
 
 .container-large {
   max-width: 100%; 
+}
+
+.container-card {
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f5eadb;
+  margin-bottom: 2.5rem;
+  position: relative;
 }

@@ -2,35 +2,47 @@
 // This context allows different components to access and modify the list of the users selected vegetables.
 // The app is wrapped in SelectedVegetablesProvider in main.jsx to provide this context to all components.
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
-import { useAuth } from "./AuthContext";
+import React, { createContext, useContext, useState } from "react";
 
+// Create a context for managing selected vegetables
 const SelectedVegetablesContext = createContext();
 
+/**
+ * Provider component to wrap your app and provide selected vegetables state
+ */
 export function SelectedVegetablesProvider({ children }) {
-  const { token } = useAuth();
+  // State to hold the currently selected vegetables
   const [selectedVegetables, setSelectedVegetables] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!token) return;
+  /**
+   * Toggle a vegetable in the selected list.
+   * If the vegetable is already selected, remove it.
+   * If not, add it to the selected list.
+   * @param {Object} vegetable - The vegetable object to toggle
+   */
+  const toggleVegetable = (vegetable) => {
+    setSelectedVegetables((previouslySelected) => 
+      previouslySelected.some((v) => v.id === vegetable.id)
+        ? previouslySelected.filter((v) => v.id !== vegetable.id) // Remove if already selected
+        : [...previouslySelected, vegetable] // Add if not selected
+    );
+  };
 
-    setLoading(true);
-    axios
-      .get("http://127.0.0.1:8000/vegetables/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setSelectedVegetables(res.data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [token]);
-
+  // Provide state and functions to all children components
   return (
-    <SelectedVegetablesContext.Provider value={{ selectedVegetables, setSelectedVegetables, loading }}>
+    <SelectedVegetablesContext.Provider
+      value={{
+        selectedVegetables,
+        setSelectedVegetables,
+        toggleVegetable
+      }}
+    >
       {children}
     </SelectedVegetablesContext.Provider>
   );
-}
+};
 
+/**
+ * Custom hook to access the SelectedVegetables context
+ */
 export const useSelectedVegetables = () => useContext(SelectedVegetablesContext);
