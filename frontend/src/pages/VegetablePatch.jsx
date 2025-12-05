@@ -11,6 +11,8 @@ import axios from "axios";
 import "../styles/VegetablePatch.css"; 
 import Button from "../components/Button";
 import { useAuth } from "../context/AuthContext"
+import { Link } from 'react-router-dom';
+
 
 export default function VegetablePatch() {
   const { selectedVegetables, setSelectedVegetables } = useSelectedVegetables();
@@ -55,13 +57,14 @@ export default function VegetablePatch() {
           ) : (
             <div className="veg-grid">
               {selectedVegetables.map((veg) => (
-                <div
-                  key={veg.id}
-                  className="veg-card clickable"
-                  onClick={() => handleClickVegetable(veg.id)}
-                >
+                <div>
+                <Link to={`/vegetable/${veg.id}`} className="veg-card clickable">
                   <Logo variant="icon" size="large" />
                   <Text size="medium" textAlign="center">{veg.name}</Text>
+             
+                </Link>  
+
+
                 </div>
               ))}
             </div>
