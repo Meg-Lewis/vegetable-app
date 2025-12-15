@@ -7,5 +7,6 @@
   .flex.responsive {
     flex-direction: column !important; 
     align-items: center;
+    
   }
 }

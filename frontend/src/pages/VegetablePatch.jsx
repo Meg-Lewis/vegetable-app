@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import PageContainer from "../components/PageContainer";
-import Container from "../components/Container";
 import Flex from "../components/Flexbox";
 import Text from "../components/Text";
 import Header from "../components/Header";
+import Navbar from "../components/Navbar";
+import Container from "../components/Container";
 import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
 import Logo from "../components/Logo"; 
 import axios from "axios";
@@ -40,10 +41,14 @@ export default function VegetablePatch() {
   };
 
   return (
+    <div>
     <PageContainer>
-      <Container size="large">
-        <Flex direction="column" gap="2rem" align="center" justify="flex-start">
+      <Navbar/>
+      <Container>
+
           <Header label="Your Veg Patch" />
+          </Container>
+          <Flex direction="column" gap="2rem" align="center" justify="center">
 
           {selectedVegetables.length === 0 ? (
             <div>
@@ -70,7 +75,8 @@ export default function VegetablePatch() {
             </div>
           )}
         </Flex>
-      </Container>
+
     </PageContainer>
+    </div>
   );
 }

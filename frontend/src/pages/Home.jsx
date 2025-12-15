@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import Navbar from "../components/Navbar";
+import PageContainer from "../components/PageContainer";
 import { useAuth } from "../context/AuthContext";
 import { useContext } from "react";
 import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
@@ -47,6 +49,8 @@ export default function Homepage() {
 
   return (
     <div>
+      <PageContainer>
+      <Navbar/>
       <Header label="Homepage" />
       <div style={{ width: "200px", margin: "20px auto" }}>
       {/* <Button
@@ -57,6 +61,7 @@ export default function Homepage() {
       /> */}
       </div>
       <TodoList />
+      </PageContainer>
 
     </div>
   );

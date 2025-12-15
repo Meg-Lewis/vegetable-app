@@ -8,7 +8,7 @@ import Text from "../components/Text";
 import HeaderVegProfile from "../components/HeaderVegProfile";
 import Flex from "../components/Flexbox";
 import Logo from "../components/Logo";
-import Button from "../components/Button";
+import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"
 
@@ -35,6 +35,7 @@ export default function PlantProfile() {
 
   return (
     <PageContainer>
+      <Navbar/>
 
       <Container size="large">
         <Heading level={1} alignText="left">{vegetable.name}</Heading>
@@ -161,7 +162,6 @@ export default function PlantProfile() {
           </Container>
         )}
       </Container>
-      <Button onClick={() => navigate("/")} label="Home" variant="secondary" />
     </PageContainer>
   );
 }

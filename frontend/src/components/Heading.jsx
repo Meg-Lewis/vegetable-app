@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/Heading.css";
+import { House } from 'lucide-react';
 
 // level: 1-6 for h1-h6
 // children: text inside the heading
