@@ -3,7 +3,7 @@ import "../styles/Text.css";
 
 // size: "small", "medium", "large"
 // textAlign: "left", "center", "right"
-// variant: "primary", "secondary", "muted"
+// variant: "primary", "secondary", "bold", "muted"
 // children: text inside the paragraph
 // className: additional classes for styling
 

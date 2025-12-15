@@ -1,8 +1,9 @@
 /* Base text styles */
 .text {
   font-family: "Poppins", sans-serif;
-  margin: 0.5em 0;
-  line-height: 1.5;
+  margin: 0.25em 0;
+  line-height: 1.2;
+
 }
 
 /* Size variants */
@@ -27,6 +28,14 @@
   color: var(--color-background);
 }
 
+.text-bold {
+  line-height: 1.2;
+  font-weight: bold;
+
+}
+
 .text-muted {
+  margin: 0;
+  line-height: 1;
   color: var(--color-default);
 }
