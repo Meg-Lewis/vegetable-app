@@ -4,7 +4,7 @@ import Heading from "../Heading";
 import InputField from "../InputField";
 import Button from "../Button";
 import Flex from "../Flexbox";
-import { CirclePlus, Trash } from "lucide-react";
+import { CirclePlus, X } from "lucide-react";
 import "../../styles/index.css"; 
 
 
@@ -71,7 +71,7 @@ export default function TodoList() {
               className="checkbox"
             />
             <span style={{ flex: 1 }}>{item.text}</span>
-            <Button onClick={() => handleDelete(item.id)} variant="icon"><Trash size={22} color="black" /></Button>
+            <Button onClick={() => handleDelete(item.id)} variant="icon"><X size={22} color="black" /></Button>
           </li>
         ))}
       </ul>
