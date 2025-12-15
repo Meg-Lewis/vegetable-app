@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { useContext } from "react";
 import { useSelectedVegetables } from "../context/SelectedVegetablesContext";
+import TodoList from "../components/TodoList/TodoList";
 
 export default function Homepage() {
   const { setSelectedVegetables } = useSelectedVegetables(); // get context function for selected vegetables
@@ -48,13 +49,15 @@ export default function Homepage() {
     <div>
       <Header label="Homepage" />
       <div style={{ width: "200px", margin: "20px auto" }}>
-      <Button
+      {/* <Button
         onClick={resetVegSelect}
         type="button"
         label="DELETE VEG"
         variant="secondary"
-      />
+      /> */}
       </div>
+      <TodoList />
+
     </div>
   );
 }

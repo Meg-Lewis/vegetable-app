@@ -7,6 +7,7 @@ from fastapi import Depends, HTTPException, Header
 cred = credentials.Certificate("app/firebase_admin_credentials.json")
 firebase_admin.initialize_app(cred)
 
+# Verifies Firebase token and gets current user.
 def verify_firebase_token(authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Invalid auth header")

@@ -1,3 +1,5 @@
+# These define what the API sends/receives.
+
 from pydantic import BaseModel
 
 class VegetableBase(BaseModel):
@@ -16,3 +18,19 @@ class Vegetable(VegetableBase):
 class UserVegetableOut(BaseModel):
     id: int
     name: str
+
+class TodoCreate(BaseModel):
+    text: str
+
+
+class TodoResponse(BaseModel):
+    id: int
+    text: str
+    completed: bool
+
+    class Config:
+        orm_mode = True
+
+
+class TodoUpdate(BaseModel):
+    completed: bool

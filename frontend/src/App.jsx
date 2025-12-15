@@ -11,6 +11,7 @@ import GetStarted from './pages/GetStarted';
 import VegSelect from './pages/VegSelect';
 import VegetablePatch from './pages/VegetablePatch';
 import ProtectedRoute from "./components/ProtectedRoute";
+import TodoList from "./components/TodoList/TodoList";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
   <Route path="/get-started" element={<GetStarted />} />
   <Route path="/veg-select" element={<VegSelect />} />
   <Route path="/vegetablepatch" element={<VegetablePatch />} />
+  <Route path="/todo" element={<TodoList />} />
+
 </Routes>
 
   );

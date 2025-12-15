@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -31,6 +31,8 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     firebase_uid = Column(String(50), unique=True, index=True)
     vegetables = relationship("UserVegetable", back_populates="user")
+    todos = relationship("Todo", back_populates="user")
+
 
 # Vegetables selected by users
 class UserVegetable(Base):
@@ -42,3 +44,14 @@ class UserVegetable(Base):
     user = relationship("User", back_populates="vegetables")
     vegetable = relationship("Vegetable")  # To access all veg details.
 
+# Todo items for users
+class Todo(Base):
+    __tablename__ = "todos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    text = Column(String(100), nullable=False)
+    completed = Column(Boolean, default=False)
+    
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    user = relationship("User", back_populates="todos")
