@@ -40,3 +40,11 @@ body {
   --radius-md: 8px;
   --radius-lg: 16px;
 }
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  accent-color: #bfd35a;
+}

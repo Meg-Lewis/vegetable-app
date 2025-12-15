@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchTodos, addTodo, deleteTodo, toggleComplete } from "./todoApi";
+import Heading from "../Heading";
+import InputField from "../InputField";
+import Button from "../Button";
+import Flex from "../Flexbox";
+import { CirclePlus, Trash } from "lucide-react";
+import "../../styles/index.css"; 
+
+
 
 export default function TodoList() {
   const [items, setItems] = useState([]);
@@ -35,18 +43,14 @@ export default function TodoList() {
 
   return (
     <div style={{ maxWidth: 500, margin: "0 auto" }}>
-      <h2>My To-Do List</h2>
-
-      <form onSubmit={handleAdd} style={{ display: "flex", marginBottom: 20 }}>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Add new task"
-          style={{ flex: 1, padding: 8 }}
-        />
-        <button type="submit" style={{ marginLeft: 8 }}>Add</button>
+      <Heading level={3} alignText = "left" >My Tasks</Heading>
+      <form onSubmit={handleAdd}>
+      <Flex direction="row" gap="1.5rem" align="center" justify="space-between" margin="0 0 1.5rem 0">
+        <InputField placeholder="Add new task" value={text} onChange={(e) => setText(e.target.value)} onEnter={handleAdd} />
+        <Button type="submit" variant="icon"><CirclePlus size={28} color="#bfd35a" /></Button>
+      </Flex>
       </form>
+
 
       <ul style={{ listStyle: "none", padding: 0 }}>
         {items.map((item) => (
@@ -64,11 +68,10 @@ export default function TodoList() {
               checked={item.completed}
               onChange={() => handleToggle(item)}
               style={{ marginRight: 10 }}
+              className="checkbox"
             />
             <span style={{ flex: 1 }}>{item.text}</span>
-            <button onClick={() => handleDelete(item.id)} style={{ marginLeft: 10 }}>
-              Delete
-            </button>
+            <Button onClick={() => handleDelete(item.id)} variant="icon"><Trash size={22} color="black" /></Button>
           </li>
         ))}
       </ul>

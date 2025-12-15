@@ -11,6 +11,7 @@ export default function Flex({
   fullHeight = false,
   responsive = true,
   padding = "0",
+  margin = "0",
 }) {
   const style = {
     display: "flex",
@@ -21,6 +22,7 @@ export default function Flex({
     flexWrap: wrap,
     height: fullHeight ? "100vh" : "auto",
     padding: padding,
+    margin: margin,
   };
 
   return (
