@@ -10,8 +10,10 @@ import ForgotPassword from './pages/ForgotPassword';
 import GetStarted from './pages/GetStarted';
 import VegSelect from './pages/VegSelect';
 import VegetablePatch from './pages/VegetablePatch';
+import YearOverview from './pages/YearOverview';
 import ProtectedRoute from "./components/ProtectedRoute";
 import TodoList from "./components/TodoList/TodoList";
+
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
   <Route path="/veg-select" element={<VegSelect />} />
   <Route path="/vegetablepatch" element={<VegetablePatch />} />
   <Route path="/todo" element={<TodoList />} />
+  <Route path="/year-overview" element={<ProtectedRoute><YearOverview /></ProtectedRoute>} />
 
 </Routes>
 

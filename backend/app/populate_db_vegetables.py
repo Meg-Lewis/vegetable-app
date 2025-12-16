@@ -1,6 +1,6 @@
 import csv
-from database import SessionLocal, engine
-from models import Vegetable, Base
+from app.database import SessionLocal, engine
+from app.models import Vegetable, Base
 
 # Create tables if they don't exist
 Base.metadata.create_all(bind=engine)
@@ -8,7 +8,7 @@ Base.metadata.create_all(bind=engine)
 # Open a new session
 db = SessionLocal()
 
-with open("vegetables.csv", newline="", encoding="utf-8") as csvfile:
+with open("app/vegetables.csv", newline="", encoding="utf-8") as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         veg = Vegetable(
@@ -28,7 +28,13 @@ with open("vegetables.csv", newline="", encoding="utf-8") as csvfile:
             sow=row.get("sow"),
             plant_hoe=row.get("plant_hoe"),
             harvest=row.get("harvest"),
-            harvest_signs=row.get("harvest_signs")
+            harvest_signs=row.get("harvest_signs"),
+            sow_start=int(row.get("sow_start") or 0),
+            sow_end=int(row.get("sow_end") or 0),   
+            plant_start=int(row.get("plant_start") or 0),
+            plant_end=int(row.get("plant_end") or 0),   
+            harvest_start=int(row.get("harvest_start") or 0),
+            harvest_end=int(row.get("harvest_end") or 0)
         )
         db.add(veg)
 

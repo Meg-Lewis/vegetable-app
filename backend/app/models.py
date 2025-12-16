@@ -25,6 +25,12 @@ class Vegetable(Base):
     plant_hoe = Column(String(50))
     harvest = Column(String(50))
     harvest_signs = Column(Text)
+    sow_start = Column(Integer)
+    sow_end = Column(Integer)
+    plant_start = Column(Integer)
+    plant_end = Column(Integer)
+    harvest_start = Column(Integer)
+    harvest_end = Column(Integer)
 
 class User(Base):
     __tablename__ = "users"
