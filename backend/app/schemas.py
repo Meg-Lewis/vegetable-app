@@ -1,6 +1,7 @@
 # These define what the API sends/receives.
 
 from pydantic import BaseModel
+from typing import Optional, Tuple
 
 class VegetableBase(BaseModel):
     name: str
@@ -34,3 +35,10 @@ class TodoResponse(BaseModel):
 
 class TodoUpdate(BaseModel):
     completed: bool
+
+class VegetableYearOverview(BaseModel):
+    id: int
+    name: str
+    sow: Optional[Tuple[int, int]]
+    plant: Optional[Tuple[int, int]]
+    harvest: Optional[Tuple[int, int]]

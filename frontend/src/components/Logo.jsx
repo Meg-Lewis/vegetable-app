@@ -9,11 +9,9 @@ import "../styles/logo.css";
 // clickable: whether the logo is a link to homepage (default true)
 
 export default function Logo({
-  variant = "combo", 
-  size = "medium",   
-  clickable = true,
-  style = {}
-
+  variant = "combo",
+  size = "medium",
+  style = {},
 }) {
   let src;
   switch (variant) {
@@ -23,13 +21,16 @@ export default function Logo({
     case "icon":
       src = icon;
       break;
-    case "combo":
     default:
       src = combo;
-      break;
   }
 
-  const img = <img src={src} alt="VegAble Logo" className={`logo logo-${size}`} style={style} />;
-
-  return clickable ? <a href="/">{img}</a> : img;
+  return (
+    <img
+      src={src}
+      alt="VegAble logo"
+      className={`logo logo-${size}`}
+      style={style}
+    />
+  );
 }

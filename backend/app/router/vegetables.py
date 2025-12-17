@@ -13,6 +13,44 @@ router = APIRouter()
 from fastapi import Request
 
 
+# RETRIEVE vegetable info for YEAR OVERVIEW
+#--------------------------------------------------------------
+@router.get("/year-overview", response_model=List[schemas.VegetableYearOverview])
+def get_user_vegetables(uid: str = Depends(verify_firebase_token), db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.firebase_uid == uid).first()
+    if not user:
+        return []
+
+    veg_year_overview = (
+        db.query(
+            models.Vegetable.id,
+            models.Vegetable.name,
+            models.Vegetable.sow_start,
+            models.Vegetable.sow_end,
+            models.Vegetable.plant_start,
+            models.Vegetable.plant_end,
+            models.Vegetable.harvest_start,
+            models.Vegetable.harvest_end
+        )
+        .join(models.UserVegetable, models.Vegetable.id == models.UserVegetable.vegetable_id)
+        .filter(models.UserVegetable.user_id == user.id)
+        .all()
+    )
+
+    year_overview_list = [
+    {
+        "id": veg[0],
+        "name": veg[1],
+        "sow": (veg[2], veg[3]),
+        "plant": (veg[4], veg[5]),
+        "harvest": (veg[6], veg[7])
+    }
+    for veg in veg_year_overview
+]
+
+
+    return year_overview_list
+
 
 # RETRIEVES ALL vegetables available. Used for selection list.
 #--------------------------------------------------------------
@@ -146,42 +184,5 @@ def reset_user_vegetables(
     }
 
 
-# RETRIEVE vegetable info for YEAR OVERVIEW
-#--------------------------------------------------------------
-@router.get("/year-overview", response_model=List[schemas.UserVegetableOut])
-def get_user_vegetables(uid: str = Depends(verify_firebase_token), db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.firebase_uid == uid).first()
-    if not user:
-        return []
-
-    veg_year_overview = (
-        db.query(
-            models.Vegetable.id,
-            models.Vegetable.name,
-            models.Vegetable.sow_start,
-            models.Vegetable.sow_end,
-            models.Vegetable.plant_start,
-            models.Vegetable.plant_end,
-            models.Vegetable.harvest_start,
-            models.Vegetable.harvest_end
-        )
-        .join(models.UserVegetable, models.Vegetable.id == models.UserVegetable.vegetable_id)
-        .filter(models.UserVegetable.user_id == user.id)
-        .all()
-    )
-
-    year_overview_list = [
-    {
-        "id": veg[0],
-        "name": veg[1],
-        "sow": (veg[2], veg[3]),
-        "plant": (veg[4], veg[5]),
-        "harvest": (veg[6], veg[7])
-    }
-    for veg in veg_year_overview
-]
-
-
-    return year_overview_list
 
 

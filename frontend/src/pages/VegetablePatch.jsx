@@ -62,14 +62,11 @@ export default function VegetablePatch() {
           ) : (
             <div className="veg-grid">
               {selectedVegetables.map((veg) => (
-                <div>
+                <div key={veg.id}>   
                 <Link to={`/vegetable/${veg.id}`} className="veg-card clickable">
                   <Logo variant="icon" size="large" />
                   <Text size="medium" textAlign="center">{veg.name}</Text>
-             
                 </Link>  
-
-
                 </div>
               ))}
             </div>
