@@ -9,7 +9,7 @@ export default function YearGrid({ vegetables }) {
   const monthLetters = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
   return (
-    <div className="veg-grid">
+    <div className="calendar-grid">
       {/* Header row for months */}
       <div className="veg-row header-row">
         <div className="veg-name-cell"></div>
