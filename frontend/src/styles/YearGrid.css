@@ -1,12 +1,35 @@
 .veg-grid {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
+
+
+.month-cell.header {
+  display: flex; 
+  justify-content: center; 
+  align-items: flex-end; 
+  height: 40px;
+  border: none;
+  padding: 0;
+  font-weight: bold;
+}
+
 
 .veg-row {
   display: flex;
   align-items: center;
+  border: 1px solid var(--color-secondary);
+  padding: 5px;
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius-md);
+}
+
+.veg-row:first-child {
+  border: none;
+  padding: 0;
+  gap: 0;
+  margin-bottom: 0.25rem;
 }
 
 .veg-name-cell {
@@ -14,47 +37,41 @@
   padding-right: 10px;
 }
 
-.month-cell {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.veg-name-cell a {
+  text-decoration: none;
+
 }
 
-.header {
-  font-weight: bold;
-  background-color: #f7f7f7;
+.month-cell {
+  width: 30px;
+  height: 40px;
+  border: 1px solid #eee;
+  position: relative;         /* required for absolute positioning of dots */
 }
 
 .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  margin: 1px;
+  position: absolute;
+  left: 50%;             
+  transform: translateX(-50%);
 }
 
-/* Colors */
+/* Vertical positions */
 .green {
   background-color: green;
+  top: 0; /* top of cell */
 }
 
 .orange {
   background-color: orange;
+  top: 50%;                   /* middle of cell */
+  transform: translate(-50%, -50%); 
 }
 
 .red {
   background-color: red;
+  bottom: 0;/* bottom of cell */
 }
 
-/* Optional: make dots stack nicely */
-.month-cell {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #eee;
-}
