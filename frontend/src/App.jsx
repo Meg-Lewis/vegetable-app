@@ -13,6 +13,7 @@ import VegetablePatch from './pages/VegetablePatch';
 import YearOverview from './pages/YearOverview';
 import ProtectedRoute from "./components/ProtectedRoute";
 import TodoList from "./components/TodoList/TodoList";
+import Seasons from "./pages/Seasons";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
   <Route path="/vegetablepatch" element={<VegetablePatch />} />
   <Route path="/todo" element={<TodoList />} />
   <Route path="/year-overview" element={<ProtectedRoute><YearOverview /></ProtectedRoute>} />
+  <Route path="/seasons" element={<ProtectedRoute><Seasons /></ProtectedRoute>} />
 
 </Routes>
 
