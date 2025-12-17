@@ -22,6 +22,7 @@ export default function VegetablePatch() {
 
 
   // Fetch vegetables ONCE when the page loads
+  //----------------------------------------------------------------------
   useEffect(() => {
     axios
       .get("http://localhost:8000/vegetables/user", {
@@ -35,9 +36,36 @@ export default function VegetablePatch() {
       });
       }, [setSelectedVegetables]);
 
-  // Simple click handler — always navigate
   const handleClickVegetable = (vegId) => {
     navigate(`/${vegId}`);
+  };
+
+  // RESET VEG SELECTION
+  //----------------------------------------------------------------------
+  const resetVegSelect = async () => {
+    const confirmReset = window.confirm(
+      "This will delete all your vegetables. Are you sure you want to continue?"
+    );
+    if (!confirmReset) return;
+
+    try {
+      const resetResponse = await fetch(`http://127.0.0.1:8000/vegetables/users/vegetables/reset`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`, // send Firebase token to backend
+        },
+      });
+
+      if (resetResponse.ok) {
+        setSelectedVegetables([]); // Clear front end context
+        alert("Your selection has been reset!");
+      } else {
+        alert("Something went wrong during resetting your selection.");
+      }
+    } catch (error) {
+      console.error("Reset error:", error);
+      alert("An error occurred while resetting your selection.");
+    }
   };
 
   return (
@@ -72,6 +100,15 @@ export default function VegetablePatch() {
             </div>
           )}
         </Flex>
+        {selectedVegetables.length > 0 && (
+        <Button
+          onClick={resetVegSelect}
+          type="button"
+          label="Reset Veg Patch"
+          variant="secondary"
+        />
+      )}
+
 
     </PageContainer>
     </div>
