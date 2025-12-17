@@ -3,14 +3,21 @@ import { Link } from "react-router-dom";
 import "../../styles/YearGrid.css";
 import Text from "../../components/Text";
 
+// Helper function to check if a month is in a range, accounting for wrap-around (late sow dates in the year)
+function isMonthInRange(month, [start, end]) {
+  if (start <= end) {
+    return month >= start && month <= end;
+  }
+  // Wrap-around: e.g., 11 → 3
+  return month >= start || month <= end;
+}
 
 export default function YearGrid({ vegetables }) {
-  // Month letters: Jan = "J", Feb = "F", etc.
   const monthLetters = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
   return (
     <div className="calendar-grid">
-      {/* Header row for months */}
+      {/* Header row */}
       <div className="veg-row header-row">
         <div className="veg-name-cell"></div>
         {monthLetters.map((letter, idx) => (
@@ -30,21 +37,22 @@ export default function YearGrid({ vegetables }) {
           </div>
 
           {monthLetters.map((_, monthIdx) => {
-            const month = monthIdx + 1; // database is 1-based
+            const month = monthIdx + 1; // Database is 1-based
+            const dots = [];
+
+            if (isMonthInRange(month, veg.sow)) {
+              dots.push(<span key={`sow-${month}`} className="dot green" />);
+            }
+            if (isMonthInRange(month, veg.plant)) {
+              dots.push(<span key={`plant-${month}`} className="dot orange" />);
+            }
+            if (isMonthInRange(month, veg.harvest)) {
+              dots.push(<span key={`harvest-${month}`} className="dot red" />);
+            }
 
             return (
               <div key={`month-${veg.id}-${month}`} className="month-cell">
-                <div className="dot-container">
-                  {month >= veg.sow[0] && month <= veg.sow[1] && (
-                    <span className="dot green" />
-                  )}
-                  {month >= veg.plant[0] && month <= veg.plant[1] && (
-                    <span className="dot orange" />
-                  )}
-                  {month >= veg.harvest[0] && month <= veg.harvest[1] && (
-                    <span className="dot red" />
-                  )}
-                </div>
+                <div className="dot-container">{dots}</div>
               </div>
             );
           })}
