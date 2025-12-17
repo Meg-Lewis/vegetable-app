@@ -31,14 +31,13 @@ export default function Login() {
   return (
     <div>
       <PageContainer>
-      <Container size="small">
-      <Flex direction="column" gap="1rem" align="center" justify="center" fullHeight={true}>
+      <Flex direction="column" gap="1rem" align="center" justify="center">
       <Logo variant="icon" size="large" clickable={false} />
       <Heading level={1}>Login</Heading>
 
         <form onSubmit={handleLogin}>
-          <InputField type = "email" placeholder = "Email" value = {email} onChange = {(e) => setEmail(e.target.value)} required />
-          <InputField type = "password" placeholder = "Password" value = {password} onChange = {(e) => setPassword(e.target.value)} required />
+          <InputField type = "email" placeholder = "Email" value = {email} onChange = {(e) => setEmail(e.target.value)} required style={{ marginBottom: "1rem" }} />
+          <InputField type = "password" placeholder = "Password" value = {password} onChange = {(e) => setPassword(e.target.value)} required style={{ marginBottom: "1rem" }} />
           <Flexbox gap="1rem" justify="center" marginTop="1rem">
           <Button label="Login" variant="primary" type="submit" />
           </Flexbox>
@@ -49,7 +48,6 @@ export default function Login() {
         <Text size="small" variant="muted">Forgot your password? Reset it <a href="/forgot-password">here</a>.</Text>
         </div>
       </Flex>
-      </Container>
       </PageContainer>
     </div>
   );

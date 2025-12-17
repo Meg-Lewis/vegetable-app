@@ -32,8 +32,7 @@ export default function ForgotPassword() {
   return (
     <div>
     <PageContainer>
-    <Container size="small">
-    <Flex direction="column" gap="1rem" align="center" justify="center" fullHeight={true}>
+    <Flex direction="column" gap="1rem" align="center" justify="center">
     <Logo variant="icon" size="large" clickable={false} />
     <Heading level={1}>Reset Password</Heading>
     <Text size="small" textAlign="center" variant="muted">Enter your email address below to receive a password reset link.</Text>
@@ -45,6 +44,7 @@ export default function ForgotPassword() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          style={{ marginBottom: "1rem" }}
         />
         <Flexbox>
         <Button type="submit" label="Send reset email" />
@@ -57,7 +57,6 @@ export default function ForgotPassword() {
       {message && <p style={{ color: "green" }}>{message}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
         </Flex>
-        </Container>
         </PageContainer>
     </div>
   );

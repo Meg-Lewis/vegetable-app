@@ -54,8 +54,7 @@ export default function SignUp() {
   return (
     <div>
       <PageContainer>
-      <Container size="small">
-        <Flex direction="column" gap="1rem" align="center" justify="center" fullHeight={true}>
+      <Flex direction="column" gap="1rem" align="center" justify="center">
       <Logo variant="icon" size="large" clickable={false} />
       <Heading level={1}>Sign Up</Heading>
       <form onSubmit={handleSubmit}>
@@ -66,6 +65,7 @@ export default function SignUp() {
         value={formData.name}
         onChange={handleChange}
         required
+        style={{ marginBottom: "1rem" }}
       />
         
          <InputField
@@ -75,6 +75,7 @@ export default function SignUp() {
         value={formData.email}
         onChange={handleChange}
         required
+        style={{ marginBottom: "1rem" }}
       />
       <InputField
         type="password"
@@ -82,6 +83,7 @@ export default function SignUp() {
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
+        style={{ marginBottom: "1rem" }}
       />
       <InputField
         type="password"
@@ -89,6 +91,7 @@ export default function SignUp() {
         placeholder="Confirm password"
         value={formData.confirmPassword}
         onChange={handleChange}
+        style={{ marginBottom: "2rem" }}
       />
       <Flexbox>
       <Button type="submit"  label="Submit" variant="primary" />
@@ -97,7 +100,6 @@ export default function SignUp() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Text size="small" variant="muted">Already have an account? Log in <a href="/login">here</a>.</Text>
       </Flex>
-      </Container>
       </PageContainer>
     </div>
   );

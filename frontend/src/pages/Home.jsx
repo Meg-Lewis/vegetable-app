@@ -24,7 +24,7 @@ export default function Homepage() {
     <div>
       <PageContainer>
       <Navbar/>
-      <Header label="Homepage" />
+      <Header label="Home" />
       <div style={{ width: "200px", margin: "20px auto" }}>
 
       </div>

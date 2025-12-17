@@ -9,6 +9,7 @@
 /* Size variants */
 .text-small {
   font-size: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .text-medium {
@@ -35,7 +36,7 @@
 }
 
 .text-muted {
-  margin: 0;
+  margin-bottom: 0.5rem;
   line-height: 1;
   color: var(--color-default);
 }
